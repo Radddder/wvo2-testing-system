@@ -1,8 +1,3 @@
-'''
-To do list
-1、读数扰动直接延时重读
-2、去掉TEC部分，只读样品温度
-'''
 from machine import Pin, SoftSPI
 from max31855 import MAX31855
 from ssd1306 import SSD1306_SPI
@@ -214,5 +209,5 @@ while(1):
     if led() == 1:
         take_photo()
     else:
-        time.sleep_ms(250)        
+        time.sleep_ms(250)
         
