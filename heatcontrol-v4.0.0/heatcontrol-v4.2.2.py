@@ -1,7 +1,6 @@
 '''
 To do list
 1、读数扰动直接延时重读
-2、去掉TEC部分，只读样品温度
 '''
 from machine import Pin, SoftSPI
 from max31855 import MAX31855
