@@ -13,6 +13,10 @@ spi = SoftSPI(baudrate=800000, polarity=1, sck=Pin(13), miso=Pin(12), mosi=Pin(1
 
 sd = SDCard(spi,cs)
 
+def write_png(buf, width, height):
+    # buf - bytearray
+    
+
 def main():
     
     os.Vfsfat(sd) #文件系统初始化
