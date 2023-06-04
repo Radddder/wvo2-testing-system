@@ -1,3 +1,11 @@
+'''
+Todolist
+1、保存数据到SD卡，原TEC热电偶部分改为SD卡槽
+2、MLX90640红外成像
+3、半球积分控制集成
+'''
+
+
 from machine import Pin, SoftSPI
 from max31855v2 import MAX31855
 from ssd1306 import SSD1306_SPI

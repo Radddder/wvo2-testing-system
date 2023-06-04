@@ -22,17 +22,7 @@ class MAX31855:
         self.cs = cs
         self.data = bytearray(4)
 
-    def read(self, internal=False, raw=False):
-        """
-        Read the measured temperature.
-
-        If ``internal`` is ``True``, return a tuple with the measured
-        temperature first and the internal reference temperature second.
-
-        If ``raw`` is ``True``, return the values as 14- and 12- bit integers,
-        otherwise convert them to Celsuius degrees and return as floating point
-        numbers.
-        """
+    def read(self):
 
         self.cs.off()
         try:
@@ -75,22 +65,25 @@ class MAX31855:
         # 29   |
         # 30   | --> MSB
         # 31  -' --> sign
+        judge = 0
         if self.data[3] & 0x01:
-            raise RuntimeError("thermocouple not connected")
+            #raise RuntimeError("thermocouple not connected")
+            judge = judge + 1
         if self.data[3] & 0x02:
-            raise RuntimeError("short circuit to ground")
+            #raise RuntimeError("short circuit to ground")
+            judge = judge + 1
         if self.data[3] & 0x04:
-            raise RuntimeError("short circuit to power")
+            #raise RuntimeError("short circuit to power")
+            judge = judge + 1
         if self.data[1] & 0x01:
-            raise RuntimeError("faulty reading")
-        temp, refer = ustruct.unpack('>hh', self.data)
-        refer >>= 4
-        temp >>= 2
-        if raw:
-            if internal:
-                return temp, refer
-            return temp
-        if internal:
-            return temp / 4, refer * 0.0625
-        return temp / 4
+            #raise RuntimeError("faulty reading")
+            judge = judge + 1
+            
+        if judge:
+            return "error"
+        else:
+            temp, refer = ustruct.unpack('>hh', self.data)
+            refer >>= 4
+            temp >>= 2
+            return temp / 4
 
