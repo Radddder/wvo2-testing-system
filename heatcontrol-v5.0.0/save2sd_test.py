@@ -9,17 +9,14 @@ import time,os
 from sdcard import SDCard
 
 cs = Pin(33, mode=Pin.OUT, value=1)
-spi = SoftSPI(baudrate=800000, polarity=1, sck=Pin(13), miso=Pin(12), mosi=Pin(14)) 
+spi = SoftSPI(baudrate=800000, polarity=1, sck=Pin(13), miso=Pin(12), mosi=Pin(14))
 
 sd = SDCard(spi,cs)
-
-def write_png(buf, width, height):
-    # buf - bytearray
-    
+  
 
 def main():
     
-    os.Vfsfat(sd) #文件系统初始化
+    os.VfsFat(sd) #文件系统初始化
     os.mount(sd,"/sd") #挂载路径
     
     fb = os.statvfs("/sd")

@@ -25,6 +25,12 @@ content = buffer.getvalue()
 buffer.close()
 
 # Open a text file for writing
+'''
 with open('my_array.txt', 'w') as f:
     # Write the content to the file
     f.write(content)
+'''
+
+w = open("/sd/IRphoto/test.txt",'w',encoding="utf-8")
+w.write(content)
+w.close() 
