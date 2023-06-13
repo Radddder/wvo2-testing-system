@@ -1,4 +1,4 @@
-# ir+sd as slave -- Master D17 to Slave D34
+# ir+sd as slave -- Master D18 to Slave D34
 from machine import Pin, SoftSPI, SoftI2C
 from mlx90640_v4 import I2C, MLX90640, RefreshRate, __memory_manage
 from sdcard import SDCard
@@ -6,8 +6,8 @@ import os, time, gc
 
 #### Main Program ####
 irphoto_sw = Pin(34,Pin.IN)
-
-print("Beginning main ...")
+led = Pin(2, mode=Pin.OUT, value=0)
+#print("Beginning main ...")
 gc.threshold(5000) # Seriously push the memory managing to the limit! Manages every <n> bytes allocated
  
 ixc = I2C(pins=(5, 18), frequency=100000)
@@ -25,7 +25,8 @@ os.mount(sd,"/sd") #挂载路径
 while(irphoto_sw()):
     time.sleep_ms(50)
     if(irphoto_sw()):
-        print("Querying camera ...\n")
+        #print("Querying camera ...\n")
+        led.on()
         mytime = time.localtime()
         mytime = "%d-%d-%d-%02d-%02d-%02d"%(mytime[0],mytime[1],mytime[2],mytime[3]+8,mytime[4],mytime[5])
         mlx.getFrame(frame)
@@ -34,3 +35,4 @@ while(irphoto_sw()):
         w.write(content)
         w.close() 
         __memory_manage()
+        led.off()
